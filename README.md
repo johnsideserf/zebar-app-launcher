@@ -176,3 +176,7 @@ Some useful icons:
 ## License
 
 MIT
+
+---
+
+Part of my [Windows rice](https://github.com/johnsideserf/windows-ricing). See also: [zebar-spotify-widget](https://github.com/johnsideserf/zebar-spotify-widget) | [zebar-doom-widget](https://github.com/johnsideserf/zebar-doom-widget)
