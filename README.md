@@ -86,13 +86,60 @@ All CSS color values. Applied at runtime, with sensible defaults as fallback.
 
 ### Apps
 
-Each entry in the `apps` array:
+Each entry in the `apps` array has three fields:
 
 | Field | Description |
 |-------|-------------|
-| `name` | Display label in the dropdown |
-| `icon` | [Nerd Font](https://www.nerdfonts.com/cheat-sheet) class (e.g. `nf nf-md-console`) |
-| `command` | Executable name or path. Names in `PATH` work directly (e.g. `wt.exe`). For apps not in PATH, use the full path |
+| `name` | Display label shown in the dropdown |
+| `icon` | [Nerd Font](https://www.nerdfonts.com/cheat-sheet) icon class |
+| `command` | Program to launch (see below) |
+
+#### Customizing the app list
+
+Edit the `"apps"` array in `config.json`. Add, remove, or reorder entries — the dropdown renders them in the order listed. Restart Zebar after making changes.
+
+```json
+"apps": [
+  { "name": "VS Code", "icon": "nf nf-md-microsoft_visual_studio_code", "command": "code" },
+  { "name": "Spotify", "icon": "nf nf-md-spotify", "command": "spotify.exe" },
+  { "name": "Discord", "icon": "nf nf-md-chat", "command": "discord.exe" },
+  { "name": "Firefox", "icon": "nf nf-md-firefox", "command": "firefox.exe" }
+]
+```
+
+#### Finding the right command
+
+The `command` field is passed to `cmd /c start`, so anything you can type into the Windows Run dialog (`Win+R`) will work here.
+
+- **Apps in PATH** — use the exe name directly: `wt.exe`, `notepad.exe`, `code`, `spotify.exe`
+- **Apps not in PATH** — use the full path: `C:\\Program Files\\Mozilla Firefox\\firefox.exe`
+- **Tip**: to check if an app is in PATH, open a terminal and type the exe name. If it launches, you can use that name directly
+
+#### Choosing an icon
+
+Icons use [Nerd Fonts](https://www.nerdfonts.com/) classes. To find the right icon:
+
+1. Go to the [Nerd Fonts Cheat Sheet](https://www.nerdfonts.com/cheat-sheet)
+2. Search for your app (e.g. "spotify", "firefox", "folder")
+3. Click the icon to copy its name (e.g. `nf-md-spotify`)
+4. Prefix with `nf ` in the config: `"icon": "nf nf-md-spotify"`
+
+Some useful icons:
+
+| Icon class | Description |
+|------------|-------------|
+| `nf nf-md-console` | Terminal / command line |
+| `nf nf-md-web` | Generic browser |
+| `nf nf-md-firefox` | Firefox |
+| `nf nf-md-google_chrome` | Chrome |
+| `nf nf-md-microsoft_edge` | Edge |
+| `nf nf-md-microsoft_visual_studio_code` | VS Code |
+| `nf nf-md-spotify` | Spotify |
+| `nf nf-md-folder` | File explorer |
+| `nf nf-md-note_text` | Notepad / text editor |
+| `nf nf-md-chat` | Chat / messaging |
+| `nf nf-md-gamepad_variant` | Gaming |
+| `nf nf-md-cog` | Settings |
 
 ## Screenshots
 
