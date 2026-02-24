@@ -32,7 +32,7 @@
           "offsetX": "0px",
           "offsetY": "0px",
           "width": "48px",
-          "height": "240px",
+          "height": "40px",
           "monitorSelection": {
             "type": "primary"
           },
@@ -49,6 +49,22 @@
           "offsetY": "48px",
           "width": "170px",
           "height": "240px",
+          "monitorSelection": {
+            "type": "primary"
+          },
+          "dockToEdge": {
+            "enabled": false,
+            "edge": null,
+            "windowMargin": "0px"
+          }
+        },
+        {
+          "name": "embedded-bottom",
+          "anchor": "bottom_left",
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "width": "48px",
+          "height": "40px",
           "monitorSelection": {
             "type": "primary"
           },

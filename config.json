@@ -1,5 +1,9 @@
 {
-  "mode": "floating",
+  "mode": "embedded",
+  "bar": {
+    "height": 40,
+    "offsetX": 0
+  },
   "theme": {
     "background": "rgba(13 14 22 / 92%)",
     "foreground": "#a9b1d6",

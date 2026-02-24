@@ -19,6 +19,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow: hidden;
+}
+
 html, body, #root {
   height: 100%;
 }
@@ -35,10 +39,16 @@ body {
   padding-left: 4px;
 }
 
-/* Embedded mode — button sits flush at top-left, no extra padding */
+/* Embedded mode — button sits flush, no extra padding */
 html[data-mode="embedded"] #root {
   padding: 0;
-  padding-left: 4px;
+}
+
+/* Bottom-bar embedded — push button to bottom of window */
+html[data-bar-position="bottom"][data-mode="embedded"] #root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .launcher.embedded {
@@ -84,7 +94,7 @@ div, span, button {
 }
 
 .launcher-btn i {
-  font-size: 18px;
+  font-size: calc(var(--btn-size) * 0.45);
 }
 
 .launcher-btn:hover {
@@ -107,6 +117,8 @@ div, span, button {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 4px;
+  max-height: 400px;
+  overflow-y: auto;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   animation: dropdown-in 0.12s ease-out;
@@ -126,6 +138,30 @@ div, span, button {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes dropdown-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bottom-bar: dropdown opens above the button */
+html[data-bar-position="bottom"] .dropdown {
+  top: auto;
+  bottom: calc(var(--btn-size) + 10px);
+  animation: dropdown-in-up 0.12s ease-out;
+}
+
+html[data-bar-position="bottom"] .embedded .dropdown {
+  top: auto;
+  bottom: var(--btn-size);
+  animation: dropdown-in-up 0.12s ease-out;
 }
 
 /* App items */

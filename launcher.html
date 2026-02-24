@@ -23,15 +23,35 @@
       import { createRoot } from 'https://esm.sh/react-dom@18/client?dev';
       import * as zebar from 'https://esm.sh/zebar@3.0';
       import { getCurrentWindow } from 'https://esm.sh/@tauri-apps/api@2.0.2/window';
-      import { LogicalSize } from 'https://esm.sh/@tauri-apps/api@2.0.2/dpi';
+      import { LogicalSize, LogicalPosition } from 'https://esm.sh/@tauri-apps/api@2.0.2/dpi';
 
       const tauriWindow = getCurrentWindow();
+
+      // Capture the preset-defined window geometry before React touches it.
+      let presetSize = null;
+      let presetPos = null;
+      Promise.all([
+        tauriWindow.outerSize(),
+        tauriWindow.outerPosition(),
+      ]).then(([size, pos]) => {
+        const scale = window.devicePixelRatio;
+        presetSize = size.toLogical(scale);
+        presetPos = pos.toLogical(scale);
+      });
 
       async function resizeWindow(width, height) {
         try {
           await tauriWindow.setSize(new LogicalSize(width, height));
         } catch (err) {
           console.error('Resize failed:', err);
+        }
+      }
+
+      async function positionWindow(x, y) {
+        try {
+          await tauriWindow.setPosition(new LogicalPosition(x, y));
+        } catch (err) {
+          console.error('Position failed:', err);
         }
       }
 
@@ -58,6 +78,7 @@
         const [apps, setApps] = useState([]);
         const [mode, setMode] = useState('floating');
         const [isOpen, setIsOpen] = useState(false);
+        const [barConfig, setBarConfig] = useState(null);
         const dropdownRef = useRef(null);
 
         // Load config.json on mount.
@@ -71,21 +92,66 @@
                 document.documentElement.dataset.mode = config.mode;
               }
               if (config.theme) applyTheme(config.theme);
+              if (config.bar) {
+                setBarConfig({
+                  height: Math.max(config.bar.height ?? 40, 24),
+                  offsetX: config.bar.offsetX ?? 0,
+                });
+              }
             })
             .catch(err =>
               console.error('Failed to load config.json:', err),
             );
         }, []);
 
-        // Resize window: button-sized when closed, full when open.
+        // Apply bar geometry for floating mode.
+        useEffect(() => {
+          if (!barConfig) return;
+          if (mode === 'floating') {
+            document.documentElement.style.setProperty('--btn-size', barConfig.height + 'px');
+          }
+        }, [barConfig, mode]);
+
+        // Embedded mode: resize window for dropdown, restore preset size on close.
+        // Auto-detect whether to flip the dropdown upward based on screen position.
+        // Tauri keeps top-left fixed on resize, so bottom-positioned widgets need
+        // to shift upward when the dropdown opens.
         useEffect(() => {
           if (mode !== 'embedded') return;
+          const closedW = presetSize ? presetSize.width : 48;
+          const closedH = presetSize ? presetSize.height : 40;
+
+          // Button fills the preset window height.
+          document.documentElement.style.setProperty(
+            '--btn-size',
+            closedH + 'px',
+          );
+
+          // Auto-flip: check if there's enough space below the widget.
+          const dropdownHeight = Math.min(apps.length * 36 + 8, 400);
+          const widgetY = presetPos ? presetPos.y : 0;
+          const widgetH = presetSize ? presetSize.height : 40;
+          const spaceBelow = window.screen.height - widgetY - widgetH;
+          const shouldFlip = spaceBelow < dropdownHeight;
+
+          document.documentElement.dataset.barPosition = shouldFlip ? 'bottom' : 'top';
+
           if (isOpen) {
-            resizeWindow(170, 240);
+            const totalH = closedH + dropdownHeight;
+            if (shouldFlip && presetPos) {
+              positionWindow(
+                presetPos.x,
+                presetPos.y - dropdownHeight,
+              );
+            }
+            resizeWindow(Math.max(closedW, 170), totalH);
           } else {
-            resizeWindow(48, 40);
+            resizeWindow(closedW, closedH);
+            if (shouldFlip && presetPos) {
+              positionWindow(presetPos.x, presetPos.y);
+            }
           }
-        }, [isOpen, mode]);
+        }, [isOpen, mode, apps.length]);
 
         // Close on Escape key.
         useEffect(() => {
