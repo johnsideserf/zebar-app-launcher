@@ -1,0 +1,166 @@
+@import 'https://www.nerdfonts.com/assets/css/webfont.css';
+
+:root {
+  --font-size: 12px;
+  --icon-size: 14px;
+
+  --bg: rgba(13 14 22 / 92%);
+  --fg: #a9b1d6;
+  --accent: #7aa2f7;
+  --hover: rgba(122 162 247 / 18%);
+  --active: rgba(122 162 247 / 28%);
+  --border: rgba(122 162 247 / 15%);
+  --btn-size: 40px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: ui-monospace, monospace;
+  font-size: var(--font-size);
+  color: var(--fg);
+  overflow: visible;
+}
+
+#root {
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
+/* Embedded mode — button sits flush at top-left, no extra padding */
+html[data-mode="embedded"] #root {
+  padding: 0;
+  padding-left: 4px;
+}
+
+.launcher.embedded {
+  position: relative;
+}
+
+.embedded .launcher-btn {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  overflow: hidden;
+}
+
+.embedded .launcher-btn:hover {
+  background: var(--hover);
+}
+
+.embedded .launcher-btn.active {
+  background: var(--active);
+}
+
+div, span, button {
+  cursor: default;
+  user-select: none;
+}
+
+/* Launcher button */
+.launcher-btn {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.launcher-btn i {
+  font-size: 18px;
+}
+
+.launcher-btn:hover {
+  background: var(--hover);
+  border-color: var(--accent);
+}
+
+.launcher-btn.active {
+  background: var(--active);
+  border-color: var(--accent);
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: calc(var(--btn-size) + 10px);
+  left: 4px;
+  min-width: 160px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: dropdown-in 0.12s ease-out;
+}
+
+.embedded .dropdown {
+  left: 0;
+  top: var(--btn-size);
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* App items */
+.app-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: var(--font-size);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.app-item:hover {
+  background: var(--hover);
+}
+
+.app-item:active {
+  background: var(--active);
+}
+
+.app-item i {
+  font-size: var(--icon-size);
+  color: var(--accent);
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.app-name {
+  white-space: nowrap;
+}

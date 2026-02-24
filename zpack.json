@@ -1,0 +1,64 @@
+{
+  "$schema": "https://github.com/glzr-io/zebar/raw/v3.0.0/resources/zpack-schema.json",
+  "name": "app-launcher",
+  "version": "1.0.0",
+  "description": "A configurable app launcher widget for Zebar. Displays a clickable button that opens a dropdown menu to launch your favorite apps.",
+  "tags": ["launcher", "apps", "utility"],
+  "previewImages": ["./preview-docked.png", "./preview-floating-clicked.png", "./preview-floating-unclicked.png", "./preview-unclicked.png"],
+  "repositoryUrl": "https://github.com/johnsideserf/zebar-app-launcher",
+  "widgets": [
+    {
+      "name": "app-launcher",
+      "htmlPath": "./launcher.html",
+      "zOrder": "top_most",
+      "shownInTaskbar": false,
+      "focused": false,
+      "resizable": false,
+      "transparent": true,
+      "includeFiles": ["*.html", "*.css", "*.json", "*.png"],
+      "caching": {
+        "defaultDuration": 604800,
+        "rules": []
+      },
+      "privileges": {
+        "shellCommands": [
+          { "program": "cmd", "argsRegex": ".*" }
+        ]
+      },
+      "presets": [
+        {
+          "name": "embedded",
+          "anchor": "top_left",
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "width": "48px",
+          "height": "240px",
+          "monitorSelection": {
+            "type": "primary"
+          },
+          "dockToEdge": {
+            "enabled": false,
+            "edge": null,
+            "windowMargin": "0px"
+          }
+        },
+        {
+          "name": "floating",
+          "anchor": "top_left",
+          "offsetX": "8px",
+          "offsetY": "48px",
+          "width": "170px",
+          "height": "240px",
+          "monitorSelection": {
+            "type": "primary"
+          },
+          "dockToEdge": {
+            "enabled": false,
+            "edge": null,
+            "windowMargin": "0px"
+          }
+        }
+      ]
+    }
+  ]
+}

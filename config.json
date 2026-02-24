@@ -1,0 +1,17 @@
+{
+  "mode": "floating",
+  "theme": {
+    "background": "rgba(13 14 22 / 92%)",
+    "foreground": "#a9b1d6",
+    "accent": "#7aa2f7",
+    "hover": "rgba(122 162 247 / 18%)",
+    "active": "rgba(122 162 247 / 28%)",
+    "border": "rgba(122 162 247 / 15%)"
+  },
+  "apps": [
+    { "name": "Terminal", "icon": "nf nf-md-console", "command": "wt.exe" },
+    { "name": "Browser", "icon": "nf nf-md-web", "command": "msedge.exe" },
+    { "name": "Explorer", "icon": "nf nf-md-folder", "command": "explorer.exe" },
+    { "name": "Notepad", "icon": "nf nf-md-note_text", "command": "notepad.exe" }
+  ]
+}
