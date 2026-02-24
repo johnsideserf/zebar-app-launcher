@@ -11,6 +11,7 @@ A configurable app launcher widget for [Zebar](https://github.com/glzr-io/zebar)
 - **Themeable** — all colors customizable via `config.json`
 - **Click-outside & Escape to close** — dropdown dismisses naturally
 - **Dynamic window resizing** — embedded mode keeps a tiny footprint when closed, expands on click
+- **Auto-flip dropdown** — automatically opens upward when the widget is near the bottom of the screen
 
 ## Installation
 
@@ -37,6 +38,7 @@ A configurable app launcher widget for [Zebar](https://github.com/glzr-io/zebar)
 |--------|-------------|
 | `floating` | Standalone button below the bar (default) |
 | `embedded` | Flush with the bar's top-left corner |
+| `embedded-bottom` | Flush with the bar's bottom-left corner |
 
 Change the `"preset"` value in `settings.json` to switch modes.
 
@@ -48,7 +50,11 @@ All settings live in a single `config.json` file:
 
 ```json
 {
-  "mode": "floating",
+  "mode": "embedded",
+  "bar": {
+    "height": 40,
+    "offsetX": 0
+  },
   "theme": {
     "background": "rgba(13 14 22 / 92%)",
     "foreground": "#a9b1d6",
@@ -69,7 +75,18 @@ All settings live in a single `config.json` file:
 ### Mode
 
 - `"floating"` — standalone button with rounded corners and border
-- `"embedded"` — flush button that blends into the bar (use with the `embedded` preset)
+- `"embedded"` — flush button that blends into the bar (use with the `embedded` or `embedded-bottom` preset)
+
+### Bar
+
+Optional settings for bar integration. Only needed when fine-tuning embedded mode.
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `height` | `40` | Button height in pixels (min 24) |
+| `offsetX` | `0` | Horizontal offset for floating mode |
+
+The dropdown direction (up or down) is detected automatically based on the widget's screen position — no manual configuration needed.
 
 ### Theme
 

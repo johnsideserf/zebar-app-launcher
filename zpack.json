@@ -1,7 +1,7 @@
 {
   "$schema": "https://github.com/glzr-io/zebar/raw/v3.0.0/resources/zpack-schema.json",
   "name": "app-launcher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A configurable app launcher widget for Zebar. Displays a clickable button that opens a dropdown menu to launch your favorite apps.",
   "tags": ["launcher", "apps", "utility"],
   "previewImages": ["./preview-docked.png", "./preview-floating-clicked.png", "./preview-floating-unclicked.png", "./preview-unclicked.png"],
